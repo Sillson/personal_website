@@ -1,6 +1,22 @@
 @import "material";
 @import 'ionicons';
 
+.dropdown-toggle::after {
+  content:'';
+}
 .icon.nav-icon {
   padding:10px;
+}
+
+/* Fix the position of the water element */
+.water-canvas {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  opacity: 0.9;
+}
+
+.hookes-jumbotron {
+  background-color: #dbdbdb;
+  margin-bottom: 30em;
 }
