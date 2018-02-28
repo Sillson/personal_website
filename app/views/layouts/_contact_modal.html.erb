@@ -7,21 +7,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <%= form_for :new_email, url: send_email_path do |f| %>
       <div class="modal-body">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="youremail@domain.com" aria-label="email" aria-describedby="basic-addon2">
+          <%= f.text_field :senders_email, placeholder: 'youremail@domain.com', autofocus: true, class: 'form-control'%>
         </div>     
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">Your Message</span>
           </div>
-          <textarea class="form-control" aria-label="Your Message"></textarea>
+          <%= f.text_area :message, placeholder: 'Your Message', autofocus: true, class: 'form-control'%>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send</button>
+        <%= f.submit 'Send', class: 'btn btn-primary' %>
       </div>
     </div>
+    <% end %>
   </div>
 </div>

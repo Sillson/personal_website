@@ -16,6 +16,8 @@ gem 'material_icons'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'ionicons-rails'
+gem 'pony'
+gem 'sendgrid-ruby'
 
 
 group :development, :test do

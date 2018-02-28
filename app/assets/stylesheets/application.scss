@@ -1,11 +1,35 @@
 @import "material";
 @import 'ionicons';
 
+
+@media all and (max-width: 700px) {
+    .home-pictures { display: none; }
+}
+
 .dropdown-toggle::after {
   content:'';
 }
 .icon.nav-icon {
   padding:10px;
+}
+
+.row-notice {
+  background-color: #b8e6b8;
+  margin: 20px 0px 5px;
+  height: 3em;
+}
+.notice {
+  margin: 10px 0px 5px;
+}
+
+.row-error {
+  background-color: #e24848;
+  margin: 20px 0px 5px;
+  height: 3em;
+}
+
+.error {
+  margin: 10px 0px 5px;
 }
 
 /* Fix the position of the water element */

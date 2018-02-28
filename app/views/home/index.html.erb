@@ -1,72 +1,73 @@
+<% if flash[:notice] %>
+  <%= render 'layouts/flash_notice' %>
+<% end %>
+<% if flash[:error] %>
+  <%= render 'layouts/flash_error' %>
+<% end %>
 <div class="container">
-  <div class="row" style="max-height:500px">
-    <div class="col-sm">
+  <div class="row">
+    <div class="col-sm home-pictures">
       <%= image_tag('wood_icon.jpg', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson wood photograph') %>
+      <%= image_tag('snow_icon.jpg', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson wood photograph') %>
     </div>
     <div class="col-sm">
       <h2 class="display-2">Stuart Illson</h2>
       <h4>Introduction</h4>
-      <p> I am a Data Engineer, which means I study and implement the most effective and efficient methods 
-      to store and process mind-bogglingly large amounts of data. I do what I do so whether it's myself or
-      a talented team of analyts, we can easily and reliable abstract valuable and interesting insights
-      out of a zen-garden esque data set.</p>
-      <h4>Mission Statement</h4>
-      <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu mauris ut elit gravida tristique.
-      Integer vel condimentum dui, vitae congue nulla. Nunc a finibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu mauris ut elit gravida tristique.
-      Integer vel condimentum dui, vitae congue nulla. Nunc a finibus massa.</p>
+      <p>Hi there! My name is Stuart, and I'm a Software Engineer based out of Bend Oregon. I'm a Data Engineer by trade, which means I study and implement the most effective methods 
+      of processing and storing mind-bogglingly large amounts of data. I do what I do to make the task of abstracting value from datasets easy and reliable.</p>
+      <p>In my free time I like to take a break from the glare of the computer screen by getting outside and enjoying the leeward side of the Cascades. Whether touring, commuting, or riding single track -- I am enthusiastic about all things bicycle. Typically I'll combine that with fly-fishing efforts, or even backcountry snowboarding.</p>
+      <h4>Mission Statement & Interests</h4>
+      <p>I became a Software Engineer almost by accident. Growing up my primary interests were in Ecology and the Sciences, however after getting my undergrad, the most attractive jobs drew me to San Francisco to work in software. After acquiring a skillset in programming and data processing, I see almost limitless potential for it's application. It feels inevitable that I will find it's incorporation beneficial to all of my future work.</p>
+      <p>My passion projects have included Computer Vision applications to count fish redds, home-cooked forecasting models for anadromous fish passage, or tree identification software.</p>
       <div class="row">
         <div class="col-sm">
           <h4>Skills</h4>
           <ul class="list-unstyled">
-            <li>Lorem ipsum dolor sit amet</li>
-            <li>Consectetur adipiscing elit</li>
-            <li>Integer molestie lorem at massa</li>
-            <li>Facilisis in pretium nisl aliquet</li>
-            <li>Nulla volutpat aliquam velit
+            <li>- Data Warehousing</li>
+            <li>- Big Data Processing</li>
+            <li>- Application Development</li>
+            <li>- Database Administration</li>
+            <li>- Agile/Rapid Development</li>
+            <li>- Languages
               <ul>
-                <li>Phasellus iaculis neque</li>
-                <li>Purus sodales ultricies</li>
-                <li>Vestibulum laoreet porttitor sem</li>
-                <li>Ac tristique libero volutpat at</li>
+                <li>Ruby</li>
+                <li>SQL</li>
+                <li>R</li>
+                <li>Python</li>
+                <li>Javascript</li>
+                <li>Go</li>
               </ul>
             </li>
-            <li>Faucibus porta lacus fringilla vel</li>
-            <li>Aenean sit amet erat nunc</li>
-            <li>Eget porttitor lorem</li>
           </ul>
         </div>
         <div class="col-sm">
           <h4>Experience</h4>
           <ul class="list-unstyled">
-            <li>Lorem ipsum dolor sit amet</li>
-            <li>Consectetur adipiscing elit</li>
-            <li>Integer molestie lorem at massa</li>
-            <li>Facilisis in pretium nisl aliquet</li>
-            <li>Nulla volutpat aliquam velit
+            <li>- Data Engineer at <a href="https://www.getg5.com", target="_blank">GetG5</a></li>
+            <li>- Freelance Rails Developer</li>
+            <li>- Deployment Coordinator at <a href="https://vendini.com", target="_blank">Vendini</a></li>
+            <li>- Floodplain Analyst at <a href="https://friendsoftheriver.org", target="_blank">FOTR</a></li>
+            <li>- Education
               <ul>
-                <li>Phasellus iaculis neque</li>
-                <li>Purus sodales ultricies</li>
-                <li>Vestibulum laoreet porttitor sem</li>
-                <li>Ac tristique libero volutpat at</li>
+                <li>Biology/Psychology @ CSUC</li>
+                <li>Google Certified Data Engineer</li>
               </ul>
             </li>
-            <li>Faucibus porta lacus fringilla vel</li>
-            <li>Aenean sit amet erat nunc</li>
-            <li>Eget porttitor lorem</li>
+            <li>- Frameworks
+              <ul>
+                <li>Rails</li>
+                <li>BigQuery</li>
+                <li>GCP</li>
+                <li>AWS</li>
+                <li>Hadoop</li>
+                <li>Spark</li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
       <h4>Get in Touch</h4>
-      <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu mauris ut elit gravida tristique.
-      Integer vel condimentum dui, vitae congue nulla. Nunc a finibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu mauris ut elit gravida tristique.
-      Integer vel condimentum dui, vitae congue nulla. Nunc a finibus massa.</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
-      <%= image_tag('snow_icon.jpg', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson wood photograph') %>
-    </div>
-    <div class="col-sm">
+      <p> I would love to get in touch regarding all things data, engineering, research, fishing, music, bike touring, or otherwise! Feel free to use the contact form via this website, or contact me directly at <a href="mailto:stuart.illson@gmail.com">stuart.illson@gmail.com</a></p>
     </div>
   </div>
 </div>
