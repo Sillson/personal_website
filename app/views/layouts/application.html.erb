@@ -12,4 +12,13 @@
     <%= render 'layouts/navigation' %>
     <%= yield %>
   </body>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118565193-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', ENV['GA_UA']);
+  </script>
 </html>
