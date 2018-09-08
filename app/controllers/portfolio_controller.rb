@@ -10,4 +10,7 @@ class PortfolioController < ApplicationController
 
   def tensor_flow
   end
+
+  def sworkit
+  end
 end
