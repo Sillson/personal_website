@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-offset-2">
+      <h1 style="text-align: left;">Estimation of River Stage & Discharge from Sentinel-2 Imagery: A Programmatic Approach</h1>
+      <hr>
+      <p style="font-size:smaller">Stuart Illson 2019</p>
+
+      <h2>Brief</h2>
+      <p>Not only do rivers represent an important resource for human and agricultural developments, but they are the conduits by which approximately two fifths of the global total rainfall over land finds its way back to the ocean (Oki and Kanae, 2006). As they wend their way towards the sea, they perform important ecological processes, provide freshwater for human consumption, enable transportation, as well as pose hazard in flood events. Monitoring of discharge, also known as runoff or streamflow, is a critical component of hydrological modeling. Through accurate measurements of discharge, hydrologists can examine mass water balance across inland water basins, predict water availability for human consumption, and mitigate flood events. Discharge is the feature by which a given rivers’ response to climactic and anthropogenic forces is measured.</p>
+
+      <p>While the importance of monitoring the land surface storage of water is well established, the data available to measure discharge at a global scale is poor. Discharge is measured as a function of volumetric flow rate of water through a given spatial extent. While the most accurate method is derived from in situ measurements of the vertical velocity profile by a flow meter in a transect orthogonal to current in the stream channel, it is not an economically viable solution for frequent monitoring. A common practice is to derive a relationship between an arbitrary height above some river point, known as stage, to the discharge measured in situ. Numerous flow measurements are collected over a range over stream stages, which are then plotted on an x-y axis respectively. The established relationship between stage and discharge is known as a rating curve, which can estimate discharge based on the stage measurement. Once developed, either a stage measurement, or a pressure-transducer can be placed in the river to provide near continuous estimation measurements of discharge.</p>
+
+      <p>Remote sensing presents a unique opportunity to assist in developing larger and more robust datasets to estimate global streamflow. This need is currently being addressed by the Surface Water and Ocean Topography (SWOT) sensor currently under development by NASA and Centre National D’Etudes Spatiales (CNES), which is set to launch in 2021. While this sensor has a goal to estimate discharge for rivers wider than 50m (Pavelsky et al., 2014), it is unlikely that we are to see a satellite capable of replacing in situ measurements to address scientific questions at a river-scale any time soon. That is not to say it’s not possible there are current sensors in orbit that could fill in data gaps on a continental, regional, or basin scale. Additionally, it is plausible that with enough validated modeling performed on well gauged hydrologic networks, there is promise for artificial intelligence to extrapolate those findings to poorly gauged networks. 
+      This paper explores a methodology of attempting to programmatically estimate discharge occurrences on a variety of rivers from separate networks based on in situ measurements collected by United States Geological Survey (USGS) stream gauges, and freely available imagery provided from the European Space Agency’s (ESA) Sentinel-2 mission.</p>
+
+      <div class="row" style="padding-bottom: 5px;">
+        <div class="col-md-6">
+          <%= image_tag('eel_peak_cfs.jpg', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+       </div>
+        <div class="col-md-6">
+          <%= image_tag('backprop_eel.gif', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+        </div>
+        <div class="col-md-12">
+          <p style="font-size:smaller">On the left is a capture from Sentinel 2 Imagery shown in true-color. It is a section of the Eel River near Sciota California, where the Van Duzen confluences. On the right is an image which is displaying the probablistic occurence of water in a given pixel determined by an onsite gauge discharge measurement. </p>
+        </div>
+      </div>
+
+      <h2>Background</h2>
+      <p>It has been asserted in the field of hydrological modeling that new technologies must be utilized in order to ameliorate the declining state of global discharge monitoring (Fekete & Vorosmarty, 2007). Discharge data is over-represented in small river networks that occur in regions of higher economic wealth and easier access for measurement. ‘Gauge density, (expressed as a number of gauges per unit discharge), in the Amazon is roughly four orders of magnitude less than a typical area in the eastern United States’ (Alsdorf, Rodriguez, and Lettenmaier, 2007). This implies that measurements are not representative of the global and varied surface water systems. Remote sensing has long been viewed as a potential complementary data source to in situ measurements due to its synoptic nature, temporal frequency, and ever advancing sensor capabilities.</p>
+
+      <p>The first major attempts utilized synthetic-aperture radar (SAR) to correlate river-width to in-situ discharge measurements (Smith et al., 1996; Smith et al., 1997). This demonstrated that the principle relationship of a stage to flow can be developed by using satellite imagery, and that it is possible to estimate flow from a ‘satellite-derived’ rating curve.</p>
+
+      <p>Recent research attempts to further fuse the fields of remote sensing, hydrology and fluvial geomorphology. As remotely sensed data has become more widely available and expanded in sensor capabilities, more datasets are available for exploration. The most common methodologies for the remote sensing of surface water include measuring river width using visible/infrared spectral or SAR data, radar altimetry methods, image-based elevation measurements of water surfaces from the Shuttle Radar Topography Mission (SRTM) and measuring surface water velocity to name a few (Alsdorf, Rodriguez and Lettenmaier, 2007).</p>
+
+      <p>This work intends to expand on the research done that demonstrates a satellite-derived rating curve, but diverges in that it uses spectral measurements from the visible or infrared Sentinel-2 sensors to delineate water boundaries using two common spectral ratios used in the identification of water from spectral data. Both the Normalized Difference Vegetation Index (NDVI), as well as the Modified Normalized Difference Water Index (MNDWI) have been shown capable at delineating water bodies from spectral data (Xu, 2006). While spectral measurements taken in the visible and infrared range suffer from interferences such as cloud-cover and atmospheric particulate, current moderate resolution satellite imagery that is openly available covers a global scale, in an adequate temporal frequency.</p>
+
+      <div class="row" style="padding-bottom: 5px;">
+        <div class="col-md-6">
+          <%= image_tag('yellow_high.jpg', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+       </div>
+        <div class="col-md-6">
+          <%= image_tag('yellow_low.jpg', style:'max-height:500px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+        </div>
+        <div class="col-md-12">
+          <p style="font-size:smaller">A best-fit thresholding protocol for water boundary delination is applied to the Yellowstone River at different flows.</p>
+        </div>
+      </div>
+
+      <h2>Methods</h2>
+      <h4>Application Architecture</h4>
+      
+      <p>In order to perform agile and iterative analysis of a variety of river sites, it was determined that the approach should be undertaken in a programmatic and reproducible format from the onset. It was determined that the best way to interact with this task was to develop an application framework that consisted of a user-facing front-end hosted on a web-server, with a back-end worker application based on a cache and queue system to process data aggregation and analysis.</p>
+      
+      <p>The open source programming language Python was chosen for development for reasons including but not limited to: community support for open source packages, support for geospatial data processing, statistical development and ease of use. From there, the web-application framework Flask was selected as the best fit for web-application development as it provides a non-opinionated architecture with built in functionality for routing, templating, and object resource mapping (ORM). For data management, a relational database schema was required. The open-source SQL database platform Postgres was selected and provided the means of storing data pertaining to the site, flow data, satellite imagery metadata, and analysis. Additional storage for the satellite imagery was required as to not overload the storage on a local machine or server filesystem. Google Cloud Storage (GCS) offers the capability to ‘fuse’ their buckets to a filesystem directory, so this was chosen to store and serve satellite imagery for ease of use.</p>
+
+      <p>Initial development has been done on a local machine; however, the entire platform has been constructed to take advantage of modern elastic processing technologies and has been developed inside of a self-contained Docker ‘container’. A container is a standard unit of software that packages up code and dependencies in a Linux environment so that the application can be transferred seamlessly from one computing environment to another. This was specifically used so it can be hosted in a Kubernetes cluster in the future. From there, various Kubernetes pods, or instances of these Docker containers, can be created and destroyed as needed to meet computational needs and balance workload across physical hardware.</p> 
+      
+      <p>The resulting architecture of the application is a user-facing web application that is hosted in a Kubernetes cluster, which dictates the number of worker applications that changes depending on workload. The worker applications asynchronously handle data aggregation from the USGS, and satellite imagery providers in parallel and stores the resultant data in either the Postgres or GCS systems, which is then served back to the web application for user review and interpretation.</p>
+
+      <h4>Data Collection</h4>
+
+      <p>Discharge was collected by accessing an open Application Program Interface (API) provided by the USGS per each gauge. The user would identify a USGS site for selection, and capture the unique gauge ID. From there, the web application would connect to the USGS API and download the gauge’s latitude, longitude, elevation and associated metadata. Once acquired, the application would connect again to the API to collect mean daily discharge, stage (when available) measured in cubic feet per second (CFS). For wholesale modeling a list of all USGS gauges on streams above a certain average discharge threshold in peak seasons was aggregated for processing.</p>
+      
+      <p>Using the gauge’s latitude and longitude, the worker application would then reach out to the Descartes Labs API to collect metadata on available Sentinel-2 imagery. Descartes Labs is a for-profit company that provides a suite of tools to collect and process satellite imagery. The application filters all images over the 15002 m subset of Sentinel-2 footprint to identify satellite images that are considered ‘cloud-free’. This collected metadata is joined with the gauge’s CFS data to identify the number of cloud-free images that coincide with gauge readings. A determination is made at this point as to whether there are enough images to process, and whether these images cover enough variance in discharge to appropriately develop a rating curve relationship.</p>
+      
+      <p>If the site matched the criteria, the worker pods proceed to download the imagery in parallel, as this can be the most time-consuming step depending on the amount of imagery. The imagery being download is delivered in GeoTiff format, and narrowed to Bands 2, 3 ,4, 8 & 12. Bands 2-8 are provided in 10m spatial resolution, whereas band 12 is provided in 20m resolution. This imagery comes corrected for surface reflectance using a proprietary correction algorithm designed by Descartes Labs, known as the Descartes Labs Surface Reflectance algorithm (DSLR).</p>
+      
+      <p>Once downloaded, the imagery is copied to JPEG files to be visually assessed by the user in the web application to make sure that there are no clouds obstructed the view of any water bodies, as well as remove imagery obfuscated by smoke, fine particulate, or other features than would negatively affect the performance of the model. Training sites are selected by the user on several images per gauge, through the web application. Images are selected at varying discharge measurements. In order to work properly, the user must select water sites that will remain water during low discharge events, and non-water pixels that are within the overall extent of the water body and are revealed as stage decreases.</p>
+
+      <div class="row" style="padding-bottom: 5px;">
+        <div class="col-md-6">
+          <%= image_tag('lost_coast_architecture.png', style:'max-height:375px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+       </div>
+        <div class="col-md-6">
+          <%= image_tag('process.png', style:'max-height:375px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+        </div>
+        <div class="col-md-12">
+          <p style="font-size:smaller">Both the architecture of the application structure and the process by which trials are run are graphically represented</p>
+        </div>
+      </div>
+
+      <h4>Thresholding Trials</h4>
+      <p>The model is executed by performing a sequence of trials for each site after user inspection. Each trial goes through the process of utilizing NDVI to determine the extent of water bodies in the satellite imagery that is associated with the highest discharge for each site. NDVI is calculated as a normalized difference between the near-infrared (NIR) band of the Sentinel-2 sensor and the Red band.</p>
+
+      <%= image_tag('ndvi.png', style:'max-height:50px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+ 
+      <p>The output of the NDVI procedure should range from –1.0 to 1.0, with values below 0 and approaching –1.0 corresponding to water. Values near 0 will correspond to bare soil, rock, and urban developments, whereas values approaching 1.0 will correspond to healthy vegetation. These values are subject to change due to atmospheric factors, solar angle, or background in areas where vegetation is sparse. By thresholding, a binary classification is performed to determine which pixels qualify as water, and which pixels do not. Hypothetically, this output classified as water pixels is the greatest extent of water coverage for all satellite imagery pertaining to a site. The NDVI ratio images are at a spatial resolution of 10m per pixel.</p>
+
+      <p>Each satellite image that has been approved for trial is then converted to an MNDWI index and has the non-water pixels from the NDVI image masked from it. MNDWI is calculated as a normalized difference between the Green band and the short-wave-infrared (SWIR) band of the Sentinel-2 sensor.</p>
+
+      <%= image_tag('mndwi.png', style:'max-height:50px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
+       
+      <p>In an MNDWI image, the values will once again range from –1.0 - 1.0, however this time values approaching 1.0 correspond to water, whereas values near 0 and below correspond to non-water. The MNDWI images are at a spatial resolution of 20m, as the 10m Green band is resampled to 20m to match the SWIR band.</p>
+      <p>Each individual MNDWI image is then classified using thresholding to determine the ratio of water pixels to non-water pixels and stored in relation to the daily average CFS measured on the images acquisition date. Each trial differs in that it slightly adjusts the thresholding parameters for both the NDVI water boundary classification and the MNDWI water/non-water pixel ratio derivation. The accuracy of the model is assessed by two features. First is the accuracy of all training sites to be correctly classified to their respective water/non-water, and the second is the R2 value, or coefficient of determination, between the water/non-water pixel ratio classified in each MNDWI image to the CFS measured on the image’s acquisition date. The goal is to appropriately reflect that a derived rating curve from the MNDWI imagery is representative of proper classification of water and non-water.</p>
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
