@@ -3,7 +3,7 @@
     <div class="col-md-12 col-offset-2">
       <h1 style="text-align: left;">Estimation of River Stage & Discharge from Sentinel-2 Imagery: A Programmatic Approach</h1>
       <hr>
-      <p style="font-size:smaller">Stuart Illson 2019</p>
+      <p style="font-size:smaller">Stuart Illson: 2019</p>
 
       <h2>Brief</h2>
       <p>Not only do rivers represent an important resource for human and agricultural developments, but they are the conduits by which approximately two fifths of the global total rainfall over land finds its way back to the ocean (Oki and Kanae, 2006). As they wend their way towards the sea, they perform important ecological processes, provide freshwater for human consumption, enable transportation, as well as pose hazard in flood events. Monitoring of discharge, also known as runoff or streamflow, is a critical component of hydrological modeling. Through accurate measurements of discharge, hydrologists can examine mass water balance across inland water basins, predict water availability for human consumption, and mitigate flood events. Discharge is the feature by which a given rivers’ response to climactic and anthropogenic forces is measured.</p>
@@ -84,14 +84,17 @@
 
       <%= image_tag('ndvi.png', style:'max-height:50px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
  
-      <p>The output of the NDVI procedure should range from –1.0 to 1.0, with values below 0 and approaching –1.0 corresponding to water. Values near 0 will correspond to bare soil, rock, and urban developments, whereas values approaching 1.0 will correspond to healthy vegetation. These values are subject to change due to atmospheric factors, solar angle, or background in areas where vegetation is sparse. By thresholding, a binary classification is performed to determine which pixels qualify as water, and which pixels do not. Hypothetically, this output classified as water pixels is the greatest extent of water coverage for all satellite imagery pertaining to a site. The NDVI ratio images are at a spatial resolution of 10m per pixel.</p>
+      <p>The output of the NDVI procedure should range from –1.0 to 1.0, with values below 0 and approaching –1.0 corresponding to water. Values near 0 will correspond to bare soil, rock, and urban developments, whereas values approaching 1.0 will correspond to healthy vegetation. These values are subject to change due to atmospheric factors, solar angle, or background in areas where vegetation is sparse. By thresholding, a binary classification is performed to determine which pixels qualify as water, and which pixels do not. Hypothetically, this output classified as water pixels is the greatest extent of water coverage for all satellite imagery pertaining to a site. The NDVI ratio images are at a spatial resolution of 10m per pixel. Sentinel-1 Synthetic Aperture Radar (SAR) data was also incorporated as a secondary source of determining water extent at various discharge measurments. A given discharge measurment for the Sentinel-2 spectral imagery was collected and queried for an associated SAR capture of equal discharge. The collected set of SAR captures then were given training data and underwent a Support Vector Machine (SVM) classification protocol to identify the water extent.</p>
 
-      <p>Each satellite image that has been approved for trial is then converted to an MNDWI index and has the non-water pixels from the NDVI image masked from it. MNDWI is calculated as a normalized difference between the Green band and the short-wave-infrared (SWIR) band of the Sentinel-2 sensor.</p>
+      <p>Each spectral image that has been approved for trial is then converted to an MNDWI index and has the non-water pixels from the NDVI image masked from it. MNDWI is calculated as a normalized difference between the Green band and the short-wave-infrared (SWIR) band of the Sentinel-2 sensor.</p>
 
       <%= image_tag('mndwi.png', style:'max-height:50px', class: 'd-inline-block align-top', alt: 'stuart illson research') %>
        
       <p>In an MNDWI image, the values will once again range from –1.0 - 1.0, however this time values approaching 1.0 correspond to water, whereas values near 0 and below correspond to non-water. The MNDWI images are at a spatial resolution of 20m, as the 10m Green band is resampled to 20m to match the SWIR band.</p>
       <p>Each individual MNDWI image is then classified using thresholding to determine the ratio of water pixels to non-water pixels and stored in relation to the daily average CFS measured on the images acquisition date. Each trial differs in that it slightly adjusts the thresholding parameters for both the NDVI water boundary classification and the MNDWI water/non-water pixel ratio derivation. The accuracy of the model is assessed by two features. First is the accuracy of all training sites to be correctly classified to their respective water/non-water, and the second is the R2 value, or coefficient of determination, between the water/non-water pixel ratio classified in each MNDWI image to the CFS measured on the image’s acquisition date. The goal is to appropriately reflect that a derived rating curve from the MNDWI imagery is representative of proper classification of water and non-water.</p>
+
+      <h4>Satellite Derived Rating Curve and Water-Pixel Probability Modeling</h4>
+      <p>After the preceeding n number of thresholding trials have been performed for each site, a nonlinear least squares regression is performed to identify a rating curve (relationship between discharge and stage), specific to the spectral dataset on hand. This accurracy will be assessed, as well as a confusion matrix created to quantify the error rate in the best thresholing trial.</p>
 
 
 
