@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root 'home#landing'
+  get '/about', to: 'home#index'
 
   post '/send_email', to: 'home#send_email'
 
